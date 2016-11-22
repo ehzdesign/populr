@@ -1,0 +1,106 @@
+body {
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+body::before {
+    background-color: rgba(0, 16, 32, 0.8);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+
+/*popular tracks*/
+
+#popular-tracks {
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.track {
+    cursor: pointer;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+    margin: 5% 5%;
+}
+
+.track-info {
+    text-align: center;
+}
+
+#search-form {
+    width: 700px;
+    margin-top: 20%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    transition: all 1s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+#search-form h2 {
+    color: #e1e1e1;
+    font-size: 5em;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#search {
+    padding: 10px 25px;
+    width: 500px;
+    font-size: 1.5em;
+    border-radius: 35px;
+    border: 3px solid #e1e1e1;
+    background-color: rgba(0, 0, 0, 0);
+    color: #e1e1e1;
+    transition: all .5s ease-in-out;
+}
+
+#search:focus {
+    border: 3px solid #4CAF50;
+}
+
+#btn {
+    margin-left: 15px;
+    padding: 10px 50px;
+    border-radius: 35px;
+    font-size: 1.5em;
+    background-color: #4CAF50;
+    border: 3px solid #4CAF50;
+    color: #e1e1e1;
+}
+
+#btn:hover {
+    background-color: #e1e1e1;
+    color: #4CAF50;
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    text-align: center;
+    width: 100%;
+}
+
+footer p {
+    color: #e1e1e1;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+footer img {
+    width: 100px;
+    display: inline-block;
+}
