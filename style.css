@@ -18,7 +18,7 @@ body::before {
 
 /*popular tracks*/
 
-#popular-tracks {
+#tracks {
     width: 100%;
     display: -webkit-flex;
     display: -ms-flex;
