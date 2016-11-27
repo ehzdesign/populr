@@ -39,6 +39,7 @@
 
 #artist{
   flex-basis: 40%;
+  flex-shrink: 0;
   background-color: bisque;
   display: -webkit-flex;
   display: -ms-flex;
@@ -97,7 +98,7 @@
 
 #top-tracks{
   flex-basis: 60%;
-  flex-grow: 1;
+  flex-grow: 0;
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
@@ -112,13 +113,14 @@
 }
 
 #top-tracks .top-tracks__title h1 {
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: bold;
   letter-spacing: .4em;
   position: relative;
   z-index: 10;
   display: inline-block;
   -webkit-filter: drop-shadow(10px 15px 5px rgba(0,0,0,0.3));
+
 }
 
 #top-tracks .top-tracks__title h1::after{
@@ -138,18 +140,27 @@
 }
 
 .tracks{
-  padding: 5em 0;
+  padding: 7rem 0;
+}
+
+.tracks img{
+  /*padding: 5em 0;*/
+  height: 240px;
+  width: 240px;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+}
+
 }
 
 .track{
-  background-image: url('http://www.albumforest.co/uploads/albums/141/21-savage-metro-boomin-savage-mode-5787960fc4062.jpg');
+  /*background-image: url('http://www.albumforest.co/uploads/albums/141/21-savage-metro-boomin-savage-mode-5787960fc4062.jpg');
   background-position: center;
   background-size: contain;
-  background-repeat: no-repeat;
-  width: 260px;
-  height: 260px;
-  margin: 0 auto;
-  -webkit-filter: drop-shadow(10px 15px 5px rgba(0,0,0,0.3));
+  background-repeat: no-repeat;*/
+  /*width: 220px;
+  height: 220px;*/
+  /*margin: 0 auto;*/
+  /*-webkit-filter: drop-shadow(10px 15px 5px rgba(0,0,0,0.3));*/
 }
 
 
