@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+/*set size of containing wrapper*/
+.wrapper{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/*main content*/
+#main{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  text-transform: uppercase;
+  position: relative;
+
+  font-family:'Montserrat', sans-serif;
+}
+
+#main::before{
+  content: 'populr';
+  position: absolute;
+  transform: rotate(-90deg);
+	/*transform-origin: left top 0;*/
+  bottom: 1.5em;
+  z-index: 20;
+  left: -27rem;
+  font-size: 10rem;
+  font-weight: bold;
+  opacity: .2;
+
+}
+
+/*artist section*/
+
+#artist{
+  flex-basis: 40%;
+  background-color: bisque;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  background-image: url('https://i.scdn.co/image/21026282f77550dd18722ddd291edda7a094ecac');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#artist .artist-info{
+  -ms-align-self: flex-end;
+  align-self: flex-end;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 8em 0 2em;
+}
+
+#artist .artist-info *{
+  position: relative;
+  z-index: 10;
+}
+
+#artist .artist-info::before,
+#artist .artist-info::after{
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /*padding-top: 14em;*/
+}
+
+#artist .artist-info::after{
+  background: rgba(255,255,255, 0.9);
+  -webkit-clip-path: polygon(0 40%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0 40%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+#artist .artist-info::before{
+  background: rgba(211, 193, 171, 0.9);
+  -webkit-clip-path: polygon(0 0, 100% 40%, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 40%, 100% 100%, 0% 100%);
+}
+
+/*top tracks section*/
+
+#top-tracks{
+  flex-basis: 60%;
+  flex-grow: 1;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+#top-tracks .top-tracks__title,
+#top-tracks .top-tracks__body{
+  padding: 0 5em;
+}
+
+#top-tracks .top-tracks__title h1 {
+  font-size: 6rem;
+  font-weight: bold;
+  letter-spacing: .4em;
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  -webkit-filter: drop-shadow(10px 15px 5px rgba(0,0,0,0.3));
+}
+
+#top-tracks .top-tracks__title h1::after{
+  content: '';
+  width: 80%;
+  height: 70%;
+  border: 5px solid #D3C1AB;
+  position: absolute;
+  top: .5em;
+  left: -0.6em;
+  z-index: -1;
+}
+
+#top-tracks .top-tracks__body{
+  background-color: rgb(26, 26, 26);
+  color: white;
+}
+
+.tracks{
+  padding: 5em 0;
+}
+
+.track{
+  background-image: url('http://www.albumforest.co/uploads/albums/141/21-savage-metro-boomin-savage-mode-5787960fc4062.jpg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto;
+  -webkit-filter: drop-shadow(10px 15px 5px rgba(0,0,0,0.3));
+}
+
+
+/*related artists*/
+.related-artists{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 0;
+}
+
+.related-artists__avatars{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-top: 2rem;
+}
+
+.related-artists__avatar{
+  width: 3.5rem;
+  height: 3.5rem;
+  /*filter: grayscale(100%);*/
+  /*border-radius: 50%;*/
+  background: #D3C1AB;
+  -webkit-clip-path: polygon(88% 0, 100% 25%, 50% 76%, 0 25%, 15% 0);
+clip-path: polygon(88% 0, 100% 25%, 50% 76%, 0 25%, 15% 0);
+/*-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);*/
+
+background: url('http://cdn3.pitchfork.com/tracks/17546/homepage_large.121d6621.jpg');
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.related-artists__avatar:nth-of-type(2){
+  background-image: url('http://www.vvip.co/wp-content/uploads/2016/10/iwussu1yrp4nlpml4efa.jpg');
+}
+
+.related-artists__avatar:nth-of-type(3){
+  background-image: url('http://thesource.com/wp-content/uploads/2015/12/kanye.jpg');
+}
+
+.related-artists__avatar:nth-of-type(4){
+  background-image: url('http://thesource.com/wp-content/uploads/2016/06/woods.jpg');
+}
+
+.related-artists__avatar:nth-of-type(5){
+  background-image: url('http://www.aceshowbiz.com/images/news/artist-of-the-week-bryson-tiller.jpg');
+}

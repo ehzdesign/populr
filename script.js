@@ -12,6 +12,8 @@ var currentSong = new Audio();
 var getTracksPage = 0;
 
 
+
+
 var $searchForm = $('#search-form');
 
 //when search form is used
