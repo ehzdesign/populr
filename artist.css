@@ -135,8 +135,8 @@
 }
 
 #top-tracks .top-tracks__body{
-  background-color: rgb(26, 26, 26);
-  color: white;
+  /*background-color: rgb(26, 26, 26);*/
+  color: black;
 }
 
 .tracks{
