@@ -1,7 +1,9 @@
 //make an audio object
-var currentSong = new Audio();
+var currentAudio = new Audio();
 
-getArtistTopTracks('tyus');
+getArtistTopTracks('future');
+
+// displayCurrentSongInfo(currentTrack);
 
 function getArtistTopTracks(q){
   var query = q;
@@ -34,11 +36,14 @@ function getArtistTopTracks(q){
     showTrackItem(data, '#tracks');
     // initialize flipster cover flow
     $(".my-flipster").flipster({
-        style: 'carousel',
-        spacing: -0.5,
-        nav: false,
-        buttons: false,
+      style: 'carousel',
+      spacing: -0.5,
+      nav: false,
+      buttons: false,
     });
+    var currentTrack = $('.flipster__item--current');
+    console.log(currentTrack);
+    displayCurrentSongInfo(currentTrack);
   });
 };
 
@@ -61,14 +66,13 @@ function showTrackItem(collection, container) {
 };
 
 function createArtistInfo(artist, container){
-// set background image with artist image
-$('#artist').css('background-image', 'url(' + artist.images[0].url + ')');
-$('.artist-info__name').text(artist.name);
-if(artist.followers.total){
-  $('.followers__amount').text(artist.followers.total.toLocaleString());
-  $('.followers__title').text('followers');
-
-}
+  // set background image with artist image
+  $('#artist').css('background-image', 'url(' + artist.images[0].url + ')');
+  $('.artist-info__name').text(artist.name);
+  if(artist.followers.total){
+    $('.followers__amount').text(artist.followers.total.toLocaleString());
+    $('.followers__title').text('followers');
+  }
 }
 
 
@@ -105,6 +109,7 @@ function createTrackItem(track, container) {
   trackImage.appendTo($(trackContainer));
   // trackInfo.appendTo($(trackHtml));
   $(trackContainer).attr('data-audio-url', track.preview_url);
+  $(trackContainer).attr('data-track-title', track.name);
   // $(trackTitle).text('Song Name: ' + track.name);
   // $(trackNumber).text('Track Number: ' + track.track_number);
   // $(trackPopularity).text('Popularity: ' + track.popularity);
@@ -120,10 +125,16 @@ $(document).on('click', '.flipster__item--current', function (event) {
   /* Act on the event */
   var songUrl = $(this).attr('data-audio-url');
   playSong(songUrl);
+  displayCurrentSongInfo(this);
 });
 
 
 function playSong(url) {
-  currentSong.src = url;
-  currentSong.play();
+  currentAudio.src = url;
+  currentAudio.play();
+}
+
+function displayCurrentSongInfo(track){
+  console.log(track);
+  $('.current-song-title').text($(track).attr('data-track-title'));
 }

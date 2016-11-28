@@ -112,6 +112,10 @@
   padding: 0 5em;
 }
 
+#top-tracks .top-tracks__body{
+  text-align: center;
+}
+
 #top-tracks .top-tracks__title h1 {
   font-size: 5rem;
   font-weight: bold;
