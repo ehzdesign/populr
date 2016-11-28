@@ -19,11 +19,13 @@
 <body>
   <!-- main section of page -->
     <div class="wrapper">
+      <!--search-form -->
       <header id="header">
         <form class="artist-search" id="search-form">
           <input id="search" type="text" name="artist">
           <input id="btn" type="submit" name="submit" value="search" class="btn">
         </form>
+        <!--end of search-form -->
       </header>
       <main id="main">
       <section id="artist">
@@ -42,10 +44,6 @@
         <div class="top-tracks__body">
           <!-- album cover flow -->
           <div id="coverflow"></div>
-            <!-- <div class="my-flipster">
-              <ul class="tracks" id="tracks">
-              </ul>
-          </div> -->
           <!-- end of album cover flow -->
           <h6 class="current-song-title"></h6>
           <p class="current-song-popularity"></p>
@@ -69,7 +67,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="jquery.flipster.min.js" charset="utf-8"></script>
   <script src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js" charset="utf-8"></script>
-  <!-- <script src="coverflow.js" charset="utf-8"></script> -->
   <script src="artist.js"></script>
 </body>
 </html>

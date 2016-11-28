@@ -79,7 +79,6 @@ function getArtistTopTracks(q){
       });
 
     var currentTrack = $('.flipster__item--current');
-    // console.log(currentTrack);
     displayCurrentSongInfo(currentTrack);
   });
 };
@@ -134,7 +133,6 @@ function createTrackItem(track, container) {
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
   // /* Act on the event */
-
   playSong($(this));
 });
 
