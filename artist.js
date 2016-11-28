@@ -1,9 +1,40 @@
 //make an audio object
 var currentAudio = new Audio();
 
-getArtistTopTracks('21 savage');
+var init = false;
 
 // displayCurrentSongInfo(currentTrack);
+//
+var $searchForm = $('#search-form');
+
+//when search form is used
+$searchForm.on('submit', function (event) {
+  event.preventDefault();
+  /* Act on the event */
+
+  //create an object of all form values
+  query = $(this).serializeArray();
+
+  //get the typed value ( the artist the user searched for)
+  query = query[0].value;
+
+  // run function to search all tracks
+  createCoverFLow();
+
+  //get the artist top tracks
+  //@todo: use this later when an artist name is chosen
+  getArtistTopTracks(query);
+
+  //log what the user searched for
+  console.log('the query being searched for : ' + query);
+
+  //clear the form
+  $(this).trigger('reset');
+
+
+
+});
+
 
 function getArtistTopTracks(q){
   var query = q;
@@ -35,16 +66,18 @@ function getArtistTopTracks(q){
     console.log(data)
     showTrackItem(data, '#tracks');
     // initialize flipster cover flow
-    $(".my-flipster").flipster({
-      style: 'carousel',
-      spacing: -0.5,
-      nav: false,
-      buttons: false,
-      onItemSwitch: function(c,p){
-        displayCurrentSongInfo(c);
-        playSong(c);
-      }
-    });
+
+      $(".my-flipster").flipster({
+        style: 'carousel',
+        spacing: -0.5,
+        nav: false,
+        buttons: false,
+        onItemSwitch: function(c,p){
+          displayCurrentSongInfo(c);
+          playSong(c);
+        }
+      });
+
     var currentTrack = $('.flipster__item--current');
     // console.log(currentTrack);
     displayCurrentSongInfo(currentTrack);
@@ -84,44 +117,16 @@ function createTrackItem(track, container) {
   var trackContainer = $('<li>', {
     class: 'track'
   });
-  // var artistName = $('<div>', {
-  //   class: 'artist__name'
-  // });
+
   var trackImage = $('<img>', {
     class: 'track__image'
   });
-  // var trackInfo = $('<div>', {
-  //   class: 'track-info'
-  // });
-  // var trackTitle = $('<p>', {
-  //   class: 'track__title'
-  // });
-  // var trackNumber = $('<p>', {
-  //   class: 'track__number'
-  // });
-  // var trackPopularity = $('<p>', {
-  //   class: 'track__popularity'
-  // });
-  // var trackAlbum = $('<p>', {
-  //   class: 'track__album'
-  // });
-  // trackTitle.appendTo($(trackInfo));
-  // artistName.appendTo($(trackInfo));
-  // trackAlbum.appendTo($(trackInfo));
-  // trackNumber.appendTo($(trackInfo));
-  // trackPopularity.appendTo($(trackInfo));
+
   trackImage.appendTo($(trackContainer));
-  // trackInfo.appendTo($(trackHtml));
   $(trackContainer).attr('data-audio-url', track.preview_url);
   $(trackContainer).attr('data-track-title', track.name);
   $(trackContainer).attr('data-track-popularity', track.popularity);
-
-  // $(trackTitle).text('Song Name: ' + track.name);
-  // $(trackNumber).text('Track Number: ' + track.track_number);
-  // $(trackPopularity).text('Popularity: ' + track.popularity);
-  // $(trackAlbum).text('Album:' + track.album.name);
   $(trackImage).attr('src', track.album.images[1].url);
-  // $(trackHtml).appendTo(container);
   $(trackContainer).appendTo(container);
 };
 
@@ -129,9 +134,8 @@ function createTrackItem(track, container) {
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
   // /* Act on the event */
-  // var songUrl = $(this).attr('data-audio-url');
+
   playSong($(this));
-  // displayCurrentSongInfo(this);
 });
 
 
@@ -146,4 +150,10 @@ function displayCurrentSongInfo(track){
   console.log($(track).attr('data-track-title'));
   $('.current-song-title').text($(track).attr('data-track-title'));
   $('.current-song-popularity').text('popularity: ' + $(track).attr('data-track-popularity'));
+}
+
+function createCoverFLow(){
+  $('#coverflow').html('');
+  $('#coverflow').append('<div class="my-flipster"><ul class="tracks" id="tracks"></ul></div>');
+
 }

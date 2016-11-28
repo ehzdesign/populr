@@ -19,6 +19,13 @@
 <body>
   <!-- main section of page -->
     <div class="wrapper">
+      <header>
+        <form class="artist-search" id="search-form">
+          <h2>Search:</h2>
+          <input id="search" type="text" name="artist" placeholder="Haddaway">
+          <input id="btn" type="submit" name="submit" value="search" class="btn btn-primary">
+        </form>
+      </header>
       <main id="main">
       <section id="artist">
         <div class="artist-info">
@@ -35,10 +42,11 @@
         </div>
         <div class="top-tracks__body">
           <!-- album cover flow -->
-            <div class="my-flipster">
+          <div id="coverflow"></div>
+            <!-- <div class="my-flipster">
               <ul class="tracks" id="tracks">
               </ul>
-          </div>
+          </div> -->
           <!-- end of album cover flow -->
           <h6 class="current-song-title"></h6>
           <p class="current-song-popularity"></p>
