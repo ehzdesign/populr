@@ -1,7 +1,7 @@
 //make an audio object
 var currentSong = new Audio();
 
-getArtistTopTracks('drake')
+getArtistTopTracks('tyus');
 
 function getArtistTopTracks(q){
   var query = q;
@@ -20,6 +20,8 @@ function getArtistTopTracks(q){
     var artistPopularOrder = _.orderBy(data.artists.items, ['popularity'], ['desc']);
     var popularArtist = artistPopularOrder[0];
     console.log(popularArtist);
+    //display artist info in artist section
+    createArtistInfo(popularArtist);
     return $.ajax({
       url: 'https://api.spotify.com/v1/artists/' + popularArtist.id + '/top-tracks',
       data: {
@@ -57,6 +59,17 @@ function showTrackItem(collection, container) {
     createTrackItem(el, container);
   });
 };
+
+function createArtistInfo(artist, container){
+// set background image with artist image
+$('#artist').css('background-image', 'url(' + artist.images[0].url + ')');
+$('.artist-info__name').text(artist.name);
+if(artist.followers.total){
+  $('.followers__amount').text(artist.followers.total.toLocaleString());
+  $('.followers__title').text('followers');
+
+}
+}
 
 
 function createTrackItem(track, container) {

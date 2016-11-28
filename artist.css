@@ -40,11 +40,11 @@
 #artist{
   flex-basis: 40%;
   flex-shrink: 0;
-  background-color: bisque;
+  background-color: white;
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  background-image: url('https://i.scdn.co/image/21026282f77550dd18722ddd291edda7a094ecac');
+  /*background-image: url('https://i.scdn.co/image/21026282f77550dd18722ddd291edda7a094ecac');*/
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
