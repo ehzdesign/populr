@@ -228,13 +228,13 @@ clip-path: polygon(88% 0, 100% 25%, 50% 76%, 0 25%, 15% 0);
 /*-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);*/
 
-background: url('http://cdn3.pitchfork.com/tracks/17546/homepage_large.121d6621.jpg');
+/*background: url('http://cdn3.pitchfork.com/tracks/17546/homepage_large.121d6621.jpg');*/
 background-position: center;
 background-size: cover;
 background-repeat: no-repeat;
 }
 
-.related-artists__avatar:nth-of-type(2){
+/*.related-artists__avatar:nth-of-type(2){
   background-image: url('http://www.vvip.co/wp-content/uploads/2016/10/iwussu1yrp4nlpml4efa.jpg');
 }
 
@@ -248,4 +248,4 @@ background-repeat: no-repeat;
 
 .related-artists__avatar:nth-of-type(5){
   background-image: url('http://www.aceshowbiz.com/images/news/artist-of-the-week-bryson-tiller.jpg');
-}
+}*/
