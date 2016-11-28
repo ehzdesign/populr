@@ -1,7 +1,7 @@
 //make an audio object
 var currentAudio = new Audio();
 
-getArtistTopTracks('future');
+getArtistTopTracks('21 savage');
 
 // displayCurrentSongInfo(currentTrack);
 
@@ -40,9 +40,13 @@ function getArtistTopTracks(q){
       spacing: -0.5,
       nav: false,
       buttons: false,
+      onItemSwitch: function(c,p){
+        displayCurrentSongInfo(c);
+        playSong(c);
+      }
     });
     var currentTrack = $('.flipster__item--current');
-    console.log(currentTrack);
+    // console.log(currentTrack);
     displayCurrentSongInfo(currentTrack);
   });
 };
@@ -110,6 +114,8 @@ function createTrackItem(track, container) {
   // trackInfo.appendTo($(trackHtml));
   $(trackContainer).attr('data-audio-url', track.preview_url);
   $(trackContainer).attr('data-track-title', track.name);
+  $(trackContainer).attr('data-track-popularity', track.popularity);
+
   // $(trackTitle).text('Song Name: ' + track.name);
   // $(trackNumber).text('Track Number: ' + track.track_number);
   // $(trackPopularity).text('Popularity: ' + track.popularity);
@@ -122,19 +128,22 @@ function createTrackItem(track, container) {
 
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
-  /* Act on the event */
-  var songUrl = $(this).attr('data-audio-url');
-  playSong(songUrl);
-  displayCurrentSongInfo(this);
+  // /* Act on the event */
+  // var songUrl = $(this).attr('data-audio-url');
+  playSong($(this));
+  // displayCurrentSongInfo(this);
 });
 
 
-function playSong(url) {
-  currentAudio.src = url;
+function playSong(track) {
+  var songUrl = $(track).attr('data-audio-url');
+  currentAudio.src = songUrl;
   currentAudio.play();
 }
 
 function displayCurrentSongInfo(track){
-  console.log(track);
+  console.log($(track));
+  console.log($(track).attr('data-track-title'));
   $('.current-song-title').text($(track).attr('data-track-title'));
+  $('.current-song-popularity').text('popularity: ' + $(track).attr('data-track-popularity'));
 }
