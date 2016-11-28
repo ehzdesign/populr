@@ -3,6 +3,38 @@
 .wrapper{
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+}
+
+/*header styles*/
+#header{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-top: 2rem;
+  z-index: 100;
+}
+
+/*search form styles*/
+#search-form input{
+  font-family: 'Montserrat', sans-serif;
+  focus: none;
+  outline: none;
+}
+
+#search-form input[name='artist']{
+  border: none;
+  border-bottom: 1px solid grey;
+  color: rgb(23,23,23);
+}
+
+#search-form input[name='submit']{
+  background: transparent;
+  color: rgb(23,23,23);
+  border-radius: 0;
+  border: 1px solid rgb(23,23,23);
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 /*main content*/
