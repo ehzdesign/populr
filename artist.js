@@ -241,8 +241,6 @@ function audioControls(){
 }
 
 
-
-
 function songControl(){
   if(currentAudio.paused || !(currentAudio.play)){
     playSong(currentTrack);
@@ -275,7 +273,7 @@ function initApp(){
   audioControls();
 }
 
-// //bg animation
+//bg animation
 // var circles = [],
 //     canvas = document.getElementById("canvas1"),
 //     context = canvas.getContext("2d"),
