@@ -11,10 +11,11 @@ var isPlaying = false;
 
 var $searchForm = $('#search-form');
 
+var playPauseButton = $('#play-pause-button');
 var init = false;
 
 
-$('#play-pause-button').addClass('play-pause-button-paused');
+playPauseButton.addClass('play-pause-button-paused');
 
 //when search form is used
 $searchForm.on('submit', function (event) {
@@ -91,6 +92,7 @@ function getArtistTopTracks(q){
         onItemSwitch: function(c,p){
           displayCurrentSongInfo(c);
           playSong(c);
+          playPauseAnimate();
           currentTrack = c;
         }
       });
@@ -151,27 +153,47 @@ function createTrackItem(track, container) {
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
   // /* Act on the event */
-
+  isPlaying = true;
   playSong($(this));
+  playPauseAnimate();
 });
 
+//add click events when cover flow is clicked to commence the song to play
+$(document).on('click', '#play-pause-button', function(event){
+  songControl();
+});
 
-function playSong(track) {
-  var songUrl = $(track).attr('data-audio-url');
-  currentAudio.src = songUrl;
-  currentAudio.play();
-  console.log(currentAudio.currentTime);
+//add spacebar control for songs
+document.body.onkeyup = function(e){
+  if(e.keyCode == 32){
+    //your code
+    songControl();
+  }
 }
 
+function playSong(track) {
+  //set the song source by the elements data-attribute
+  var songUrl = $(track).attr('data-audio-url');
+  currentAudio.src = songUrl;
+  //enable the audio to strat playing
+  currentAudio.play();
+  //set playing to true
+  isPlaying = true;
+}
+
+//store the track time globally for the current song to be used when resuming same song
 function setTrackTime(audio){
   audio.currentTime = currentTrackTime;
   console.log(currentTrackTime + ': this is curent track time');
 }
 
+//pause the currently playing track
 function pauseSong() {
   $(currentAudio).trigger('pause');
+  isPlaying = false;
 }
 
+//display song title along with poularity score
 function displayCurrentSongInfo(track){
   console.log($(track));
   console.log($(track).attr('data-track-title'));
@@ -179,36 +201,48 @@ function displayCurrentSongInfo(track){
   $('.current-song-popularity').text('popularity: ' + $(track).attr('data-track-popularity'));
 }
 
+//create the cover flow container and clear when new artist is searched
 function createCoverFLow(){
   $('#coverflow').html('');
   $('#coverflow').append('<div class="my-flipster"><ul class="tracks" id="tracks"></ul></div>');
 
 }
 
+//enable the play button
 function audioControls(){
+  //if app is started by succesfully finding a result show the play button
   if(init){
-    $('#play-pause-button').show();
+    playPauseButton.show();
   }
 }
 
-function initApp(){
-  audioControls();
-}
 
-$(document).on('click', '#play-pause-button', function(event){
 
-  // $(this).toggleClass('paused');
-  $(this).toggleClass('play-pause-button-paused');
+
+function songControl(){
   if(currentAudio.paused || !(currentAudio.play)){
     playSong(currentTrack);
-    // $(this).text('pause');
+    playPauseAnimate();
     if(currentTrackTime > 0){
       setTrackTime(currentAudio);
     }
   }else if(currentAudio.play){
     console.log('pause');
     pauseSong();
+    playPauseAnimate();
     currentTrackTime = currentAudio.currentTime;
-    // $(this).text('play');
   }
-});
+}
+
+
+function playPauseAnimate(){
+  playPauseButton.toggleClass('play-pause-button-paused');
+  if(isPlaying){
+    playPauseButton.removeClass('play-pause-button-paused');
+  }
+}
+
+
+function initApp(){
+  audioControls();
+}
