@@ -11,7 +11,12 @@ var isPlaying = false;
 
 var $searchForm = $('#search-form');
 
+var searchErrorMessage = $('#search-error');
+
 var playPauseButton = $('#play-pause-button');
+
+var results;
+
 var init = false;
 
 
@@ -29,11 +34,15 @@ $searchForm.on('submit', function (event) {
   query = query[0].value;
 
   // run function to search all tracks
-  createCoverFLow();
+  // createCoverFLow();
 
   //get the artist top tracks
   //@todo: use this later when an artist name is chosen
   getArtistTopTracks(query);
+
+  if(results != false){
+    createCoverFLow();
+  }
 
   //log what the user searched for
   console.log('the query being searched for : ' + query);
@@ -66,11 +75,18 @@ function getArtistTopTracks(q){
   });
   var a2 = a1.then(function (data) {
     console.log(data.artists.items);
+    if( data.artists.items.length <= 0 ){
+        console.log('no results');
+        showSearchError();
+        results = false;
+        return;
+    };
+    results = true;
     var artistPopularOrder = _.orderBy(data.artists.items, ['popularity'], ['desc']);
     var popularArtist = artistPopularOrder[0];
     console.log(popularArtist);
     //display artist info in artist section
-    createArtistInfo(popularArtist);
+    createArtistInfo(popularArtist, data);
     return $.ajax({
       url: 'https://api.spotify.com/v1/artists/' + popularArtist.id + '/top-tracks',
       data: {
@@ -79,10 +95,8 @@ function getArtistTopTracks(q){
     })
   });
   a2.done(function (data) {
-    console.log(data)
     showTrackItem(data, '#tracks');
     // initialize flipster cover flow
-
       $(".my-flipster").flipster({
         style: 'carousel',
         start: 0,
@@ -103,6 +117,8 @@ function getArtistTopTracks(q){
   });
 };
 
+// function test();
+
 function showTrackItem(collection, container) {
   //if returning all tracks by user query object has property of all tracks
   // called `items` and if returning the top 10 popular tracks the property containing
@@ -121,9 +137,14 @@ function showTrackItem(collection, container) {
   });
 };
 
-function createArtistInfo(artist, container){
+function createArtistInfo(artist, data){
+  console.log(data);
   // set background image with artist image
-  $('#artist').css('background-image', 'url(' + artist.images[0].url + ')');
+  if(artist.images.length > 0){
+    $('#artist').css('background-image', 'url(' + artist.images[0].url + ')');
+  }else{
+    console.log('fix it');
+  }
   $('.artist-info__name').text(artist.name);
   if(artist.followers.total){
     $('.followers__amount').text(artist.followers.total.toLocaleString());
@@ -164,12 +185,17 @@ $(document).on('click', '#play-pause-button', function(event){
 });
 
 //add spacebar control for songs
-document.body.onkeyup = function(e){
+document.body.onkeydown = function(e){
   if(e.keyCode == 32){
     //your code
     songControl();
   }
 }
+
+$('#search').keypress(function(event) {
+  /* Act on the event */
+  searchErrorMessage.fadeOut('300');
+});
 
 function playSong(track) {
   //set the song source by the elements data-attribute
@@ -242,7 +268,154 @@ function playPauseAnimate(){
   }
 }
 
+function showSearchError(){
+  searchErrorMessage.fadeIn('fast');
+}
+
 
 function initApp(){
   audioControls();
 }
+
+// //bg animation
+// var circles = [],
+//     canvas = document.getElementById("canvas1"),
+//     context = canvas.getContext("2d"),
+//
+//     // SETTINGS
+//     opacity = 0.4,                                      // the opacity of the circles 0 to 1
+//     colors = ['rgba(80, 80, 80,' + opacity + ')',       // an array of rgb colors for the circles
+//               'rgba(111, 111, 111,' + opacity + ')',
+//               'rgba(230, 230, 230,' + opacity + ')',
+//               'rgba(200, 200, 200,' + opacity + ')',
+//               'rgba(150, 150, 150,' + opacity + ')'
+//              ],
+//     minSize = 1,                                        // the minimum size of the circles in px
+//     maxSize = 6,                                       // the maximum size of the circles in px
+//     numCircles = 200,                                   // the number of circles
+//     minSpeed = -2,                                     // the minimum speed, recommended: -maxspeed
+//     maxSpeed = 6,                                    // the maximum speed of the circles
+//     expandState = true;                                      // the direction of expansion
+//
+// function buildArray() {
+//     'use strict';
+//
+//     for (var i =0; i < numCircles ; i++){
+//         var color = Math.floor(Math.random() * (colors.length - 1 + 1)) + 1,
+//             left = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0,
+//             top = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0,
+//             size = Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize,
+//             leftSpeed = (Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed)/10,
+//             topSpeed = (Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed)/10,
+//             expandState = expandState;
+//
+//             while(leftSpeed == 0 || topSpeed == 0){
+//                 leftSpeed = (Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed)/10,
+//                 topSpeed = (Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed)/10;
+//             }
+//         var circle = {color:color, left:left, top:top, size:size, leftSpeed:leftSpeed, topSpeed:topSpeed, expandState:expandState };
+//         circles.push(circle);
+//     }
+// }
+//
+// function build(){
+//     'use strict';
+//
+//     for(var h = 0; h < circles.length; h++){
+//         var curCircle = circles[h];
+//         context.fillStyle = colors[curCircle.color-1];
+//         context.beginPath();
+//         if(curCircle.left > canvas.width+curCircle.size){
+//             curCircle.left = 0-curCircle.size;
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//         }else if(curCircle.left < 0-curCircle.size){
+//             curCircle.left = canvas.width+curCircle.size;
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//         }else{
+//             curCircle.left = curCircle.left+curCircle.leftSpeed;
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//         }
+//
+//         if(curCircle.top > canvas.height+curCircle.size){
+//             curCircle.top = 0-curCircle.size;
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//
+//         }else if(curCircle.top < 0-curCircle.size){
+//             curCircle.top = canvas.height+curCircle.size;
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//         }else{
+//             curCircle.top = curCircle.top+curCircle.topSpeed;
+//             if(curCircle.size != maxSize && curCircle.size != minSize && curCircle.expandState == false){
+//               curCircle.size = curCircle.size-0.1;
+//             }
+//             else if(curCircle.size != maxSize && curCircle.size != minSize && curCircle.expandState == true){
+//               curCircle.size = curCircle.size+0.1;
+//             }
+//             else if(curCircle.size == maxSize && curCircle.expandState == true){
+//               curCircle.expandState = false;
+//               curCircle.size = curCircle.size-0.1;
+//             }
+//             else if(curCircle.size == minSize && curCircle.expandState == false){
+//               curCircle.expandState = true;
+//               curCircle.size = curCircle.size+0.1;
+//             }
+//             context.arc(curCircle.left, curCircle.top, curCircle.size, 0, 2 * Math.PI, false);
+//         }
+//
+//         context.closePath();
+//         context.fill();
+//         context.ellipse;
+//     }
+// }
+//
+//
+// var xVal = 0;
+//
+// window.requestAnimFrame = (function (callback) {
+//     'use strict';
+//     return window.requestAnimationFrame ||
+//     window.webkitRequestAnimationFrame ||
+//     window.mozRequestAnimationFrame ||
+//     window.oRequestAnimationFrame ||
+//     window.msRequestAnimationFrame ||
+//     function (callback) {
+//         window.setTimeout(callback, 1000/60);
+//     };
+// })();
+//
+// function animate() {
+//     'use strict';
+//     var canvas = document.getElementById("canvas1"),
+//         context = canvas.getContext("2d");
+//
+//     // clear the canvas
+//     context.clearRect(0, 0, canvas.width, canvas.height);
+//
+//
+//     // draw the next frame
+//     xVal++;
+//     build();
+//
+//     //console.log("Prep: animate ==> requestAnimFrame");
+//     // request a new frame
+//     requestAnimFrame(function () {
+//         animate();
+//     });
+// }
+// window.onload = function () {
+//     'use strict';
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+//     buildArray();
+//     animate();
+// };
+//
+//
+// window.onresize = function () {
+//     'use strict';
+//     console.log("resize");
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+//     //buildArray();
+//     animate();
+// };
