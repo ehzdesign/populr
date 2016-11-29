@@ -33,8 +33,6 @@ $searchForm.on('submit', function (event) {
   //get the typed value ( the artist the user searched for)
   query = query[0].value;
 
-  // run function to search all tracks
-  // createCoverFLow();
 
   //get the artist top tracks
   //@todo: use this later when an artist name is chosen
