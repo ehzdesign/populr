@@ -4,26 +4,32 @@ var currentAudio = new Audio();
 //store the html element containing the current track item
 var currentTrack;
 
-var currentTrackTime = 10;
+//store the current track time of song when being played to be used when using the pause function to resume from paused point of audio
+var currentTrackTime;
 
-//keep track of song state
+//keep track of audio state
 var isPlaying = false;
 
-var $searchForm = $('#search-form');
+//get the search form
+var searchForm = $('#search-form');
 
+//get the search error message
 var searchErrorMessage = $('#search-error');
 
+//get the play pause button
 var playPauseButton = $('#play-pause-button');
 
+//used to store a bool if results from api call is found
 var results;
 
+//used to initialize the app
 var init = false;
 
-
+//start play pause button with play icon
 playPauseButton.addClass('play-pause-button-paused');
 
-//when search form is used
-$searchForm.on('submit', function (event) {
+//action when search form is used
+searchForm.on('submit', function (event) {
   event.preventDefault();
   /* Act on the event */
 
@@ -32,7 +38,6 @@ $searchForm.on('submit', function (event) {
 
   //get the typed value ( the artist the user searched for)
   query = query[0].value;
-
 
   //get the artist top tracks
   //@todo: use this later when an artist name is chosen
@@ -48,10 +53,12 @@ $searchForm.on('submit', function (event) {
   //clear the form
   $(this).trigger('reset');
 
+
   if(!init){
     init = true;
   }
 
+  //start the app
   initApp();
 
 
@@ -59,6 +66,7 @@ $searchForm.on('submit', function (event) {
 });
 
 
+//search spotify for chosen artist
 function getArtistTopTracks(q){
   var query = q;
 
@@ -79,8 +87,11 @@ function getArtistTopTracks(q){
         results = false;
         return;
     };
+    //tell app that results have been found
     results = true;
+    //order the artists by popularity to get the most common artist
     var artistPopularOrder = _.orderBy(data.artists.items, ['popularity'], ['desc']);
+    //get the first artist with the highest popularity rating
     var popularArtist = artistPopularOrder[0];
     console.log(popularArtist);
     //display artist info in artist section
@@ -109,13 +120,13 @@ function getArtistTopTracks(q){
         }
       });
 
+    // set the element with current class as the global current track
     currentTrack = $('.flipster__item--current');
     console.log(currentTrack);
     displayCurrentSongInfo(currentTrack);
   });
 };
 
-// function test();
 
 function showTrackItem(collection, container) {
   //if returning all tracks by user query object has property of all tracks
@@ -135,6 +146,7 @@ function showTrackItem(collection, container) {
   });
 };
 
+//set the info for the artist container
 function createArtistInfo(artist, data){
   console.log(data);
   // set background image with artist image
@@ -151,6 +163,7 @@ function createArtistInfo(artist, data){
 }
 
 
+//create the element to contain the track/album
 function createTrackItem(track, container) {
   var trackContainer = $('<li>', {
     class: 'track'
@@ -169,6 +182,7 @@ function createTrackItem(track, container) {
 };
 
 
+//function to be called when clicking on the album cover
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
   // /* Act on the event */
@@ -190,11 +204,13 @@ document.body.onkeydown = function(e){
   }
 }
 
+//remove the error message when starting to type in search form
 $('#search').keypress(function(event) {
   /* Act on the event */
   searchErrorMessage.fadeOut('300');
 });
 
+//play the audio
 function playSong(track) {
   //set the song source by the elements data-attribute
   var songUrl = $(track).attr('data-audio-url');
@@ -217,7 +233,7 @@ function pauseSong() {
   isPlaying = false;
 }
 
-//display song title along with poularity score
+//display song title along with popularity score
 function displayCurrentSongInfo(track){
   console.log($(track));
   console.log($(track).attr('data-track-title'));
@@ -240,7 +256,7 @@ function audioControls(){
   }
 }
 
-
+//control the audio
 function songControl(){
   if(currentAudio.paused || !(currentAudio.play)){
     playSong(currentTrack);
@@ -256,7 +272,7 @@ function songControl(){
   }
 }
 
-
+//animate the play/pause button
 function playPauseAnimate(){
   playPauseButton.toggleClass('play-pause-button-paused');
   if(isPlaying){
@@ -264,14 +280,18 @@ function playPauseAnimate(){
   }
 }
 
+//show search artist error message (artist not found)
 function showSearchError(){
   searchErrorMessage.fadeIn('fast');
 }
 
-
+//initialize app
 function initApp(){
   audioControls();
 }
+
+// uncomment below to see cool bubbles in background
+// must uncomment the canvas in index.html as well 
 
 //bg animation
 // var circles = [],
