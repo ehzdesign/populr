@@ -1,11 +1,20 @@
 //make an audio object
 var currentAudio = new Audio();
 
+//store the html element containing the current track item
+var currentTrack;
+
+var currentTrackTime = 10;
+
+//keep track of song state
+var isPlaying = false;
+
+var $searchForm = $('#search-form');
+
 var init = false;
 
-// displayCurrentSongInfo(currentTrack);
-//
-var $searchForm = $('#search-form');
+
+$('#play-pause-button').addClass('play-pause-button-paused');
 
 //when search form is used
 $searchForm.on('submit', function (event) {
@@ -30,6 +39,12 @@ $searchForm.on('submit', function (event) {
 
   //clear the form
   $(this).trigger('reset');
+
+  if(!init){
+    init = true;
+  }
+
+  initApp();
 
 
 
@@ -69,16 +84,19 @@ function getArtistTopTracks(q){
 
       $(".my-flipster").flipster({
         style: 'carousel',
+        start: 0,
         spacing: -0.5,
         nav: false,
         buttons: false,
         onItemSwitch: function(c,p){
           displayCurrentSongInfo(c);
           playSong(c);
+          currentTrack = c;
         }
       });
 
-    var currentTrack = $('.flipster__item--current');
+    currentTrack = $('.flipster__item--current');
+    console.log(currentTrack);
     displayCurrentSongInfo(currentTrack);
   });
 };
@@ -133,6 +151,7 @@ function createTrackItem(track, container) {
 $(document).on('click', '.flipster__item--current', function (event) {
   event.preventDefault();
   // /* Act on the event */
+
   playSong($(this));
 });
 
@@ -141,6 +160,16 @@ function playSong(track) {
   var songUrl = $(track).attr('data-audio-url');
   currentAudio.src = songUrl;
   currentAudio.play();
+  console.log(currentAudio.currentTime);
+}
+
+function setTrackTime(audio){
+  audio.currentTime = currentTrackTime;
+  console.log(currentTrackTime + ': this is curent track time');
+}
+
+function pauseSong() {
+  $(currentAudio).trigger('pause');
 }
 
 function displayCurrentSongInfo(track){
@@ -155,3 +184,31 @@ function createCoverFLow(){
   $('#coverflow').append('<div class="my-flipster"><ul class="tracks" id="tracks"></ul></div>');
 
 }
+
+function audioControls(){
+  if(init){
+    $('#play-pause-button').show();
+  }
+}
+
+function initApp(){
+  audioControls();
+}
+
+$(document).on('click', '#play-pause-button', function(event){
+
+  // $(this).toggleClass('paused');
+  $(this).toggleClass('play-pause-button-paused');
+  if(currentAudio.paused || !(currentAudio.play)){
+    playSong(currentTrack);
+    // $(this).text('pause');
+    if(currentTrackTime > 0){
+      setTrackTime(currentAudio);
+    }
+  }else if(currentAudio.play){
+    console.log('pause');
+    pauseSong();
+    currentTrackTime = currentAudio.currentTime;
+    // $(this).text('play');
+  }
+});

@@ -122,6 +122,7 @@
 
 #artist .artist-info::before{
   background: rgba(211, 193, 171, 0.9);
+  background: rgba(204, 204, 204,0.9);
   -webkit-clip-path: polygon(0 0, 100% 40%, 100% 100%, 0% 100%);
   clip-path: polygon(0 0, 100% 40%, 100% 100%, 0% 100%);
 }
@@ -164,6 +165,7 @@
   width: 80%;
   height: 70%;
   border: 5px solid #D3C1AB;
+  border: 5px solid #ccc;
   position: absolute;
   top: .5em;
   left: -0.6em;
@@ -181,8 +183,8 @@
 
 .tracks img{
   /*padding: 5em 0;*/
-  height: 240px;
-  width: 240px;
+  height: 200px;
+  width: 200px;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
 }
 
@@ -249,3 +251,75 @@ background-repeat: no-repeat;
 .related-artists__avatar:nth-of-type(5){
   background-image: url('http://www.aceshowbiz.com/images/news/artist-of-the-week-bryson-tiller.jpg');
 }*/
+
+/*play - pause */
+
+#audio-controls{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+}
+
+#play-pause-button{
+  display: block;
+  width: 100px;
+  height: 100px;
+  transform: scale(0.2);
+  transition: transform 250ms ease-in-out;
+  display: none;
+}
+
+#play-pause-button:hover{
+  transform: scale(0.3);
+}
+
+#play-pause-button::before{
+  transition: border 175ms;
+  box-sizing: border-box;
+  content: "";
+  margin: 0 5px;
+  border-left: 15px solid black;
+  border-bottom: 50px solid black;
+  border-right: 20px solid black;
+  border-top: 50px solid black;
+  display: block;
+  float: left;
+}
+
+#play-pause-button::after{
+  transition: border 175ms;
+  box-sizing: border-box;
+  float: right;
+  content: "";
+  border-left: 20px solid black;
+  border-bottom: 50px solid black;
+  border-right: 15px solid black;
+  border-top: 50px solid black;
+  display: block;
+}
+
+#play-pause-button.play-pause-button-paused::before{
+  box-sizing: border-box;
+  content: "";
+  margin: 0 5px;
+  height: 15px;
+  width: 0;
+  border-left: 80px solid black;
+  border-bottom: 50px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 50px solid transparent;
+  display: block;
+  float: left;
+}
+
+#play-pause-button.play-pause-button-paused::after{
+  box-sizing: border-box;
+  float: right;
+  content: "";
+  border-left: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 0px solid transparent;
+  display: block;
+}
